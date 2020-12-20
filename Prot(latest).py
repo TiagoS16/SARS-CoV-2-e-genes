@@ -45,17 +45,19 @@ def parse(file, E_VALUE_THRESH):
                 FILE.append(y)
     return FILE
 
-def isol_AC(x, id):
+def isol_AC(x):
     DicAC = {}
-    DicAC[id] = 1
     for hit in x:
         c = []
         for y in range(len(hit)):
             if hit[y] == '|':
                 c.append(y)
-        k = hit[c[1]+1 : c[2]]
-        if k not in DicAC:
-            DicAC[k] = 1
+        type = hit[0: c[0]]
+        print(type)
+        if type == "gb":
+            k = hit[c[0]+1 : c[1]]
+            if k not in DicAC:
+                DicAC[k] = 1
     ListAC = list(DicAC.keys())
     return ListAC
 
@@ -68,13 +70,38 @@ def proteico(id,file,blast = False, E_VALUE_THRESH = None):
         blast_prot(file, seq[1])
     x = parse(file, E_VALUE_THRESH)
     print(x)
-    ListAC = isol_AC(x, id)
+    ListAC = isol_AC(x)
     print(ListAC)
     with open('id_list_prot.txt', 'w') as f:
         for item in ListAC:
             f.write("%s\n" % item)
 
-proteico("P02675","P02675_blast.xml" ,True, None)
+proteico("P02679","P02679_blast.xml" ,False, None)
+
+
+def parse_prot(file):
+    result_handle = open(file)
+    from Bio.Blast import NCBIXML
+    blast_record = NCBIXML.read(result_handle)
+    E_VALUE_THRESH = 0.04
+    for alignment in blast_record.alignments:
+        for hsp in alignment.hsps:
+            if hsp.expect < E_VALUE_THRESH:
+                print("****Alignment****")
+                print("sequence:", alignment.title)
+                print("length:", alignment.length)
+                print("e value:", hsp.expect)
+                print(hsp.query[0:75] + "...")
+                print(hsp.match[0:75] + "...")
+                print(hsp.sbjct[0:75] + "...")
+    from Bio import SearchIO
+    blast_qresult = SearchIO.read(file, "blast-xml")
+    print(blast_qresult)
+    result_handle.close()
+
+
+parse_prot("P02679_blast.xml")
+
 
 # CHAMADAS
 # bio_prot('ORF3a.gb', 'genbank')

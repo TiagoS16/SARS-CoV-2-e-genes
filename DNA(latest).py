@@ -4,10 +4,23 @@ from Bio import SearchIO
 from Bio.Blast import NCBIXML
 from Bio.Blast import NCBIWWW
 
-def blast_DNA(FILE):
-    record = SeqIO.read(open(FILE), format='gb')
+def bio_dna(ficheiro):
+    '''
+    ficheiro = nome para ficheiro de extensão ponto gb (ex: prot.gb) ;
+    '''
+    record = SeqIO.read(ficheiro, 'genbank')
+    id = record.name
+    tam = len(record.seq)
+    seq = record.seq
+    source = record.annotations["source"]
+    print(' ID:', id, '\n', 'SEQUENCE LENGTH:', tam, 'bp', '\n', 'SEQUENCE:', seq, '\n', 'SOURCE:', source, '\n', 'FEATURES:')
+    for i in record.features:
+        print(i)
+
+def blast_DNA(genbank, blast_file):
+    record = SeqIO.read(genbank, format='gb')
     result_handle = NCBIWWW.qblast('blastn', 'nt', record.seq)
-    with open(FILE, "w") as out_handle:
+    with open(blast_file, "w") as out_handle:
         out_handle.write(result_handle.read())
     result_handle.close()
 
@@ -41,14 +54,35 @@ def obter_x(file, E_VALUE_THRESH):
     result_handle.close()
     return FILE
 
-def DNA(id,file,blast = False, E_VALUE_THRESH = None):
+def DNA(genbank, id, file,blast = False, E_VALUE_THRESH = None):
     if blast == True:
-        Start = input("introduzir nome do ficheiro GenBank")
-        blast_DNA(Start)
+        blast_DNA(genbank, file)
     x = obter_x(file, E_VALUE_THRESH)
     ListAC = isol_AC(x, id)
     with open('id_list_DNA.txt', 'w') as f:
         for item in ListAC:
             f.write("%s\n" % item)
 
-DNA('NC_000004.12', 'FBB_blast.xml', False, None)
+DNA('FGG.gb','NC_000004.12', 'FGG_blast.xml', True, None)
+
+def parse_dna(file):
+    result_handle = open(file)
+    from Bio.Blast import NCBIXML
+    blast_record = NCBIXML.read(result_handle)
+    E_VALUE_THRESH = 0.04
+    for alignment in blast_record.alignments:
+        for hsp in alignment.hsps:
+            if hsp.expect < E_VALUE_THRESH:
+                print("****Alignment****")
+                print("sequence:", alignment.title)
+                print("length:", alignment.length)
+                print("e value:", hsp.expect)
+                print(hsp.query[0:75] + "...")
+                print(hsp.match[0:75] + "...")
+                print(hsp.sbjct[0:75] + "...")
+    from Bio import SearchIO
+    blast_qresult = SearchIO.read(file, "blast-xml")
+    print(blast_qresult)
+    result_handle.close()
+
+parse_dna('FGG_blast.xml')
