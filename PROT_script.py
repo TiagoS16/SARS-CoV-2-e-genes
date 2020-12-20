@@ -92,4 +92,4 @@ def proteico(id,blast = False, imprimir, file, E_VALUE_THRESH):
 # get_prot('P02675', True)
 #blast_prot('P0DTC3', "PROT_ORF3a_blast1.xml")
 #blast_prot_pars("PROT_ORF3a_blast.xml")
-
+#yo
