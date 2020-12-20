@@ -55,6 +55,7 @@ def obter_x(file, E_VALUE_THRESH):
     return FILE
 
 def DNA(genbank, id, file,blast = False, E_VALUE_THRESH = None):
+    bio_dna(genbank)
     if blast == True:
         blast_DNA(genbank, file)
     x = obter_x(file, E_VALUE_THRESH)
