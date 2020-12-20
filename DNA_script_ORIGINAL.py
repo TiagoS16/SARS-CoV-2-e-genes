@@ -92,3 +92,4 @@ def blast_dna_pars(ficheiro):
 #bio_dna('ORF3a.gb', 'genbank')
 # blast_dna('ORF3a.gb', 'gb', 'ORF3a_blast.xml')
 # blast_dna_pars('ORF3a_blast.xml')
+#yo

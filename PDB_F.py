@@ -15,5 +15,3 @@ def PDB(ID):
     pymol.cmd.png("Protein.png", 3000, 3000, dpi=500, ray=1)
 
     pymol.cmd.quit()
-
-#PDB('6xdc')
