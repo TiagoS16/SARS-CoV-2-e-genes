@@ -120,9 +120,9 @@ def isol_blasthit(x):
         for y in range(len(hit)):
             if hit[y] == '|':
                 c.append(y)
-        type = hit[0 : c[0]]
-        y = hit[c[0] + 1: c[1]]
-        descrip = hit[c[1] + 1: c[2]]
+        type = hit[c[1]+1 : c[2]]
+        y = hit[c[2]+1 : c[3]]
+        descrip = hit[c[3] + 1: c[4]]
         final = y + ' | ' + type + ' | ' + descrip
         if final not in DicAC:
             DicAC[final] = 1
