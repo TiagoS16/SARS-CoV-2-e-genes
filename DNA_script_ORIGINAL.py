@@ -6,12 +6,12 @@ from Bio import SearchIO
 
 
 # FUNCOES
-def bio_dna(ficheiro, tipo):
+def bio_dna(ficheiro):
     '''
     ficheiro= nome e extensao do ficheiro a ler;
     tipo= extensao do ficheiro a ler (e.g. genbank);
     '''
-    record = SeqIO.read(ficheiro, tipo)
+    record = SeqIO.read(ficheiro, 'genbank')
 
     id = record.name
     tam = len(record.seq)
@@ -22,13 +22,12 @@ def bio_dna(ficheiro, tipo):
         print(i)
 
 
-def blast_dna(ficheiro, tipo, blast):
+def blast_dna(ficheiro, blast):
     '''
-    ficheiro= nome e extensao do ficheiro a ler;
-    tipo= extensao do ficheiro a ler (e.g. gb);
+    ficheiro= nome e extensao do ficheiro genbank a ler;
     blast= nome do ficheiro incluindo a entensao .xml para guardar o resultado do blast;
     '''
-    record = SeqIO.read(open(ficheiro), format=tipo)
+    record = SeqIO.read(open(ficheiro), format='gb')
 
     result_handle = NCBIWWW.qblast('blastn', 'nt', record.seq)
 
@@ -89,6 +88,6 @@ def blast_dna_pars(ficheiro):
 
 
 # CHAMADAS
-#bio_dna('ORF3a.gb', 'genbank')
-# blast_dna('ORF3a.gb', 'gb', 'ORF3a_blast.xml')
+#bio_dna('ORF3a.gb')
+# blast_dna('ORF3a.gb', 'ORF3a_blast.xml')
 # blast_dna_pars('ORF3a_blast.xml')
