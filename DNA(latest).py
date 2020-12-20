@@ -45,11 +45,10 @@ def DNA(id,file,blast = False, E_VALUE_THRESH = None):
     if blast == True:
         Start = input("introduzir nome do ficheiro GenBank")
         blast_DNA(Start)
-    else:
-        x = obter_x(file, E_VALUE_THRESH)
-        ListAC = isol_AC(x, id)
-        with open('id_list.txt', 'w') as f:
-            for item in ListAC:
-                f.write("%s\n" % item)
+    x = obter_x(file, E_VALUE_THRESH)
+    ListAC = isol_AC(x, id)
+    with open('id_list_DNA.txt', 'w') as f:
+        for item in ListAC:
+            f.write("%s\n" % item)
 
 DNA('NC_000004.12', 'FBB_blast.xml', False, None)

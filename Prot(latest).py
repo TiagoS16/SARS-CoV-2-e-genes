@@ -66,14 +66,13 @@ def proteico(id,file,blast = False, E_VALUE_THRESH = None):
         seq = filtro(x)
         print(seq)
         blast_prot(file, seq[1])
-    else:
-        x = parse(file, E_VALUE_THRESH)
-        print(x)
-        ListAC = isol_AC(x, id)
-        print(ListAC)
-        with open('id_list.txt', 'w') as f:
-            for item in ListAC:
-                f.write("%s\n" % item)
+    x = parse(file, E_VALUE_THRESH)
+    print(x)
+    ListAC = isol_AC(x, id)
+    print(ListAC)
+    with open('id_list_prot.txt', 'w') as f:
+        for item in ListAC:
+            f.write("%s\n" % item)
 
 proteico("P02675","P02675_blast.xml" ,True, None)
 
