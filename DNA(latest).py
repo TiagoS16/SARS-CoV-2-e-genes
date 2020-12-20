@@ -64,7 +64,7 @@ def DNA(genbank, id, file,blast = False, E_VALUE_THRESH = None):
         for item in ListAC:
             f.write("%s\n" % item)
 
-DNA('FGG.gb','NC_000004.12', 'FGG_blast.xml', True, None)
+DNA('FGG.gb','NC_000004.12', 'FGG_blast.xml', False, None)
 
 def parse_dna(file):
     result_handle = open(file)

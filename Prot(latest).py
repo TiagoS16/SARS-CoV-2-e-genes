@@ -13,13 +13,16 @@ def get_prot(id):
     from Bio import ExPASy
     with ExPASy.get_sprot_raw(id) as handle:
         seq_record = SeqIO.read(handle, "swiss")
+    print(seq_record.seq)
+    print(len(seq_record.seq), 'aa')
+    for k, v in seq_record.annotations.items():
+        print(k, v)
     tam= len(seq_record.seq)
     seq= seq_record.seq
-    fun= seq_record.annotations["comment"]
     tax= seq_record.annotations["taxonomy"]
     org= seq_record.annotations["organism"]
     #host= seq_record.annotations["organism_host"]
-    y = (' ID:' + id + '|' + 'SEQUENCE:' + seq + '|' + 'SEQUENCE LENGTH:' + str(tam) + 'bp' + '|' + 'TAXONOMY:' + str(tax) + '|' + 'ORGANISM:' + org + '|' + fun)
+    y = ('ID:' + id + '|' + 'SEQUENCE:' + seq + '|' + 'SEQUENCE LENGTH:' + str(tam) + 'bp' + '|' + 'TAXONOMY:' + str(tax) + '|' + 'ORGANISM:' + org )
     return y
 
 def filtro(seq):
@@ -53,7 +56,6 @@ def isol_AC(x):
             if hit[y] == '|':
                 c.append(y)
         type = hit[0: c[0]]
-        print(type)
         if type == "gb":
             k = hit[c[0]+1 : c[1]]
             if k not in DicAC:
@@ -68,6 +70,8 @@ def proteico(id,file,blast = False, E_VALUE_THRESH = None):
         seq = filtro(x)
         print(seq)
         blast_prot(file, seq[1])
+    x = get_prot(id)
+    print(x)
     x = parse(file, E_VALUE_THRESH)
     print(x)
     ListAC = isol_AC(x)
