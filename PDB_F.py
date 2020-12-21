@@ -1,6 +1,6 @@
 from Bio.PDB import *
 import pymol
-def PDB(ID):Re
+def PDB(ID):
     """"
     ID: fornecer o ID da PDB
     Return: A estrutura 3D da proteína

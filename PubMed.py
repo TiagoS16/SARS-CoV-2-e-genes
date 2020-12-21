@@ -18,6 +18,7 @@ print()
 
 for record in records:
     print("title:", record.get("TI", "?"))
+    print('abstract:', record.get('AB', '?'))
     print("authors:", record.get("AU", "?"))
     print("source:", record.get("SO", "?"))
     print("")
