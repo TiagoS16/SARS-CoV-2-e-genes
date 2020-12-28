@@ -55,9 +55,9 @@ def obter_homologos(file, E_VALUE_THRESH):
         for hsp in range(len(alignment.hsps)):
             if alignment.hsps[hsp].expect < E_VALUE_THRESH:
                 if hsp != 0:
-                    ficheiro_output.write('>'+alignment.hit_id+'_'+str(hsp)+'\n'+alignment.hsps[hsp].sbjct+'\n')
+                    ficheiro_output.write('>'+alignment.title+'_'+str(hsp)+'\n'+alignment.hsps[hsp].sbjct+'\n')
                 else:
-                    ficheiro_output.write('>'+alignment.hit_id+'\n'+alignment.hsps[hsp].sbjct+'\n')
+                    ficheiro_output.write('>'+alignment.title+'\n'+alignment.hsps[hsp].sbjct+'\n')
     result_handle.close()
 
 
