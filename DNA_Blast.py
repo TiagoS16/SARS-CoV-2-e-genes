@@ -71,6 +71,8 @@ def parse_dna(file,  E_VALUE_THRESH):
     result_handle = open(file)
     from Bio.Blast import NCBIXML
     blast_record = NCBIXML.read(result_handle)
+    if E_VALUE_THRESH == None:
+        E_VALUE_THRESH = 0.05
     for alignment in blast_record.alignments:
         for hsp in alignment.hsps:
             if hsp.expect < E_VALUE_THRESH:
