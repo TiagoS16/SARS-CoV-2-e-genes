@@ -110,4 +110,4 @@ def DNA(genbank, file,blast = False, E_VALUE_THRESH = None):
     parse_dna(file, E_VALUE_THRESH)
 
 
-DNA('FGG.gb', 'FGG_blast.xml', False, 0.05)
+DNA('FGG.gb', 'FGG_DNA_blast.xml', False, 0.05)

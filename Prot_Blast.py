@@ -52,7 +52,7 @@ def blast_prot(FILE, seq):
         out_handle.write(result_handle.read())
     result_handle.close()
 
-def parse(file, E_VALUE_THRESH):
+def obter_homologos(file, E_VALUE_THRESH):
     '''
     VARIAVEIS:
         file = Nome do ficheiro a dar com o resultado do Blast ( ex: "FGB_blast.xml")
@@ -64,66 +64,18 @@ def parse(file, E_VALUE_THRESH):
     '''
     result_handle = open(file)
     blast_record = NCBIXML.read(result_handle)
-    FILE = []
+    FILE = str('SeqsHomologas_' + str(file) + '.fasta')
+    ficheiro_output = open(FILE, 'w+')
     if E_VALUE_THRESH == None:
         E_VALUE_THRESH = 0.05
     for alignment in blast_record.alignments:
-        for hsp in alignment.hsps:
-            if hsp.expect < E_VALUE_THRESH:
-                y = alignment.title + '|' + str(alignment.length) + '|' + str(hsp.expect)
-                FILE.append(y)
-    return FILE
-
-def isol_AC(parsed_list):
-    '''
-    VARIAVEIS:
-        parsed_list = Lista devolvida filtrada pela função parse
-    RETURNS:
-        Lista de Acession numbers filtrados pelo tipo gb e sem repetições.
-    '''
-    DicAC = {}
-    for hit in parsed_list:
-        c = []
-        for y in range(len(hit)):
-            if hit[y] == '|':
-                c.append(y)
-        type = hit[0: c[0]]
-        if type == "gb":
-            k = hit[c[0]+1 : c[1]]
-            if k not in DicAC:
-                DicAC[k] = 1
-    ListAC = list(DicAC.keys())
-    return ListAC
-
-def proteico(id,file,blast = False, E_VALUE_THRESH = None):
-    '''
-    VARIAVEIS:
-        genbank = ficheiro genbank com a extensão ponto gb (ex: prot.gb)
-        id = id da base de SWISS Prot da proteina a ser tratada
-        file = Nome do ficheiro a dar com o resultado do Blast ( ex: "FGB_blast.xml")
-        blast = Em caso de omissão recebe valor  de False, se Blast = True irá utilizar o ficheiro genbank e
-        realizar um blast.
-        E_VALUE_THRESH = Recebe valor None ou qualquer numero inteiro, corresponde ao valor de e-value maximo
-        aceitavel para tratamento do output do blast.
-    RETURNS:
-        Gera um ficheiro .txt contendo os Acession Number dos resultados do blast com filtração segundo o
-        E_VALUE_THRESH e "gb".
-        '''
-    if blast == True:
-        x = get_prot(id)
-        print(x)
-        seq = filtro(x)
-        print(seq)
-        blast_prot(file, seq[1])
-    x = get_prot(id)
-    print(x)
-    x = parse(file, E_VALUE_THRESH)
-    print(x)
-    ListAC = isol_AC(x)
-    print(ListAC)
-    with open('id_list_prot.txt', 'w') as f:
-        for item in ListAC:
-            f.write("%s\n" % item)
+        for hsp in range(len(alignment.hsps)):
+            if alignment.hsps[hsp].expect < E_VALUE_THRESH:
+                if hsp != 0:
+                    pass
+                else:
+                    ficheiro_output.write('>' + alignment.title + '\n' + alignment.hsps[hsp].sbjct + '\n')
+    result_handle.close()
 
 def parse_prot(file):
     '''
@@ -152,29 +104,33 @@ def parse_prot(file):
     result_handle.close()
 
 
-
-def isol_blasthit(lista):
+def proteico(id,file,blast = False, E_VALUE_THRESH = None):
     '''
     VARIAVEIS:
-        lista = Lista devolvida filtrada pela função parse
+        genbank = ficheiro genbank com a extensão ponto gb (ex: prot.gb)
+        id = id da base de SWISS Prot da proteina a ser tratada
+        file = Nome do ficheiro a dar com o resultado do Blast ( ex: "FGB_blast.xml")
+        blast = Em caso de omissão recebe valor  de False, se Blast = True irá utilizar o ficheiro genbank e
+        realizar um blast.
+        E_VALUE_THRESH = Recebe valor None ou qualquer numero inteiro, corresponde ao valor de e-value maximo
+        aceitavel para tratamento do output do blast.
     RETURNS:
-        Ficheiro contento todos os resultados do Blast com o respetivo Acession Number | tipo | e descrição do resultado.
-    '''
-    DicAC = {}
-    for hit in lista:
-        print(hit)
-        c = []
-        for y in range(len(hit)):
-            if hit[y] == '|':
-                c.append(y)
-        type = hit[0 : c[0]]
-        y = hit[c[0] + 1: c[1]]
-        descrip = hit[c[1] + 1: c[2]]
-        final = y + ' | ' + type + ' | ' + descrip
-        if final not in DicAC:
-            DicAC[final] = 1
-    ListAC = list(DicAC.keys())
-    with open('blast_qresult.txt', 'w') as f:
-        for i in ListAC:
-            f.write("%s\n" % i)
+        Gera um ficheiro .txt contendo os Acession Number dos resultados do blast com filtração segundo o
+        E_VALUE_THRESH e "gb".
+        '''
+    if blast == True:
+        from Bio import ExPASy
+        with ExPASy.get_sprot_raw(id) as handle:
+            seq_record = SeqIO.read(handle, "swiss")
+        blast_prot(file, seq_record.seq)
+    x = get_prot(id)
+    print(x)
+    obter_homologos(file, E_VALUE_THRESH)
+    parse_prot(file)
+
+proteico('P02679', 'FGG_prot_blast.xml', True, 0.05)
+
+
+
+
 
