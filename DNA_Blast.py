@@ -70,16 +70,19 @@ def obter_lista(file, E_VALUE_THRESH):
     '''
     result_handle = open(file)
     blast_record = NCBIXML.read(result_handle)
-    FILE = []
+    FILE = str('SeqsHomologas_' + str(file) + '.fasta')
+    ficheiro_output = open(FILE, 'w+')
     if E_VALUE_THRESH == None:
         E_VALUE_THRESH = 0.05
     for alignment in blast_record.alignments:
-        for hsp in alignment.hsps:
+        for i in range(len(alignment.hsps)):
+            hsp = alignment.hsps[i]
             if hsp.expect < E_VALUE_THRESH:
-                y = alignment.title + '|' + str(alignment.length) + '|' + str(hsp.expect)
-                FILE.append(y)
+                if hsp != 0:
+                    ficheiro_output.write('>' + alignment.title + '_' + str(alignment.length) + '|' + str(hsp.expect) + '\n' + alignment.hsps[i].sbjct+'\n')
+                else:
+                    ficheiro_output.write('>' + alignment.title + '_' + str(alignment.length) + '|' + str(hsp.expect) + '\n' + alignment.hsps[i].sbjct+'\n')
     result_handle.close()
-    return FILE
 
 def DNA(genbank, id, file,blast = False, E_VALUE_THRESH = None):
     '''
@@ -156,3 +159,6 @@ def parse_dna(file):
     blast_qresult = SearchIO.read(file, "blast-xml")
     print(blast_qresult)
     result_handle.close()
+
+
+obter_lista('FBB_blast.xml', 1)
