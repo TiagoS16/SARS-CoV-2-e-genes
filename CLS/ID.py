@@ -1,7 +1,7 @@
 from Bio import Entrez
 from Bio import SeqIO
 
-class DNA_ID:
+class ID:
     def __init__(self, query, Orgn, database, res, email, file_output):
         self.query = query
         self.Orgn = Orgn
@@ -10,7 +10,7 @@ class DNA_ID:
         self.email = email
         self.file_output = file_output
 
-    def DNA(self):
+    def SEARCH(self):
         Entrez.email = self.email
         handle = Entrez.esearch(db=self.database, sort='relevance', term= self.Orgn + self.query + ', RefSeq', retmax=self.resultados)
         #Refseq para ORF3, corona virus 2
@@ -22,7 +22,7 @@ class DNA_ID:
         return idlist[0]
 
     def Save_file(self):
-        id_gene = DNA_ID.DNA(self)
+        id_gene = ID.SEARCH(self)
         File = Entrez.efetch(db=self.database, id=id_gene, retmode='text', rettype=self.file_output)
         read = SeqIO.read(File,self.file_output)
         File.close()
