@@ -55,9 +55,6 @@ class Prot_ID:
         file.write('> ID:' + self.id + '_'+ str(tam) + 'bp' + '_' +  str(tax) + '_' + org + '\n' + seq + '\n')
         return seq
 
-teste = DNA_ID('ORF3a','SARS-CoV-2','protein',10,'pg42877@alunos,uminho.pt','fasta')
-DNA_ID.Save_file(teste)
-
 
 # db = 'protein', para seqs de proteina de FGA,FGB,FGG; ORGN = Homo Sapiens [Orgn]
 # db = 'protein', para seqs de proteina de ORF3a; ORGN = Coronavirus 2
