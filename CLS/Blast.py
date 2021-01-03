@@ -39,6 +39,3 @@ class Blast:
             out_handle.write(result_handle.read())
         result_handle.close()
         print('Blast guardado no ficheiro ' + name)
-
-blast FGB FGB_Nucleotide.fasta fasta
-test = Blast(FGB, FGB_Nucleotide.fasta, 'blastp' fasta)

@@ -4,6 +4,10 @@ from Blast import Blast
 from Homologas import homologas
 from FASTA_Multiple import Create_fasta
 from Multiple_Alignment import Mutiple
+from PDB_F import PDB
+from Phylo import Phylo
+from Anal_multp import Align, hist
+
 
 
 
@@ -15,6 +19,7 @@ class shell(Cmd):
         guardar_nucleotide <nome_para_ficheiro> <id> -> guardar ficheiro apartir do id na database Nucleotide NCBI
         guardar_protein <nome_para_ficheiro> <id> ->guardar ficheiro apartir do id na database Protein NCBI
         procurar_id_swiss -> procurar id Na Swiss Prot e guardar ficheiro
+        estrutura_proteina -> atraves do id do PDB obter a estrutura 3D da proteina
         blast <nome_para_ficheiro> <input_file> <formato_do_input_file> -> realizar blast
         report_blast <nome_para_ficheiro> <input_file_blast> <E-value threshold> -> Obter o report do blast 
         homologia <nome_para_ficheiro> <input_file_blast> <E-value threshold(opcional)> -> obter os hits do blast
@@ -22,6 +27,11 @@ class shell(Cmd):
         fasta_homologos <nome_para_ficheiro> <input_file_blast> <(Nut/Ppt)> <E-value threshold(opcional)> obter a 
         sequencia total dos hits atraves dos AC
         alinhamento_multiplo <diretoria do clustalw2> <Input_file> -> 
+        arvore_filogenetica <input_file> ??????? ** codigo nao atualizado **
+        analise_alinhamento <name> <input_file>
+        tabela_substituição <name> <input_file>
+        histograma <input_file>
+        
         sair -> sair da função
                                                                         
                     Prima < ? comando > para mais informações acerca do comando                                          
@@ -163,20 +173,20 @@ class shell(Cmd):
         '''
         print("Apenas devolve ficheiros no formato fasta")
         try:
-            option = input('introduzir query a pesquisar: \n 1 - Orf3a \n 2 - FGA \n 3 - FGB \n 4 - FGG \n 5 - outro não predefinido \n Opção:')
-            if option == '1':
+            option = int(input('introduzir query a pesquisar: \n 1 - Orf3a \n 2 - FGA \n 3 - FGB \n 4 - FGG \n 5 - outro não predefinido \n Opção:'))
+            if option == 1:
                 ORF3a = Prot_ID('P0DTC3')
                 Prot_ID.get_prot(ORF3a)
-            elif option == '2':
+            elif option == 2:
                 FGA = Prot_ID('P02671')
                 Prot_ID.get_prot(FGA)
-            elif option == '3':
+            elif option == 3:
                 FGB = Prot_ID('P02675')
                 Prot_ID.get_prot(FGB)
-            elif option == '4':
+            elif option == 4:
                 FGG= Prot_ID('P02679')
                 Prot_ID.get_prot(FGG)
-            elif option == '5':
+            elif option == 5:
                 print(" Necessário saber o id na base de dados na Swiss Prot ")
                 id = input('Id a pesquisar: ')
                 Random = Prot_ID(id)
@@ -185,13 +195,42 @@ class shell(Cmd):
                 print('Opção inválida')
         except:print('Erro de execução')
 
+    def do_estrutura_proteina(self):
+        '''
+        *** Para utlizar esta função é necessario ter o Pymol instalado ***
+        > Obtem imagem 3D da proteina atraves do PDB
+        Variaveis : Recebidas ao longo execução da função
+        Returns: Imagem da estrutura 3D
+        '''
+        try:
+            option = int(input('introduzir query a pesquisar: \n 1 - ORF3a \n 2 - FGA \n 3 - FGB \n 4 - FGG \n 5 - outro não predefinido \n Opção:'))
+            if option == 1:
+                ORF3a = PDB('***')
+
+            elif option == 2:
+                FGA = PDB('***')
+                PDB.PDB(FGA)
+            elif option == 3:
+                FGB = PDB('***')
+                PDB.PDB(FGB)
+            elif option == 4:
+                FGG = PDB('***')
+                PDB.PDB(FGG)
+            elif option == 5:
+                id = input('Id do PBD a pesquisar : ')
+                Random = PDB(id)
+                PDB.PDB(Random)
+            else:
+                print('Opção inválida')
+        except: print('Erro de execução')
+
     def do_blast(self, arg1):
         '''
         ***É necessario possuir um ficheiro .fasta ou .gb com a sequência para realizar esta operação ***
         > Realiza o blast no NCBI à escolha do utilizador
         Variaveis : - Nome para o ficheiro devolvido pela função <nome_para_ficheiro>
                     - Ficheiro .fasta ou .gb que contém a sequência <input_file>
-                    - Formato do ficheiro com a sequência <formato_do_input_file>
+                    - Formato do ficheiro com a sequência *(fasta ou gb)* <formato_do_input_file>
         Returns: Ficheiro .xml com o resultado do blast
         '''
         try:
@@ -216,7 +255,7 @@ class shell(Cmd):
         except:
             print('Erro de execução')
 
-    def report_blast(self,arg):
+    def do_report_blast(self,arg):
         '''
         ***É necessario possuir um ficheiro .xml com o resultado do blast para realizar esta operação ***
         > Extrai para um ficheiro .txt com o report inteiro do blast
@@ -243,7 +282,7 @@ class shell(Cmd):
             homologas.BLAST_REPORT(Random)
         except: print('Erro de execução')
 
-    def homologia(self, arg):
+    def do_homologia(self, arg):
         '''
         ***É necessario possuir um ficheiro .xml com o resultado do blast para realizar esta operação ***
         > Extrai a sequencia dos blast hits para um ficheiro .fasta
@@ -271,7 +310,7 @@ class shell(Cmd):
         except:
             print('Erro de execução')
 
-    def homologo_AC(self, arg):
+    def do_homologo_AC(self, arg):
         '''
         ***É necessario possuir um ficheiro .xml com o resultado do blast para realizar esta operação ***
         > Extrai os Acession Number dos blast hits para um ficheiro .txt
@@ -299,7 +338,7 @@ class shell(Cmd):
         except:
             print('Erro de execução')
 
-    def fasta_homologos(self, arg):
+    def do_fasta_homologos(self, arg):
         '''
         ***É necessario possuir um ficheiro .xml com o resultado do blast para realizar esta operação ***
         > Procura as sequências dos blast hits pelos respetivos Acession Numbers na base de dados apropriada do NCBI
@@ -343,10 +382,9 @@ class shell(Cmd):
         > Realiza o Alinhamento Multiplo entre várias sequencias
         Variaveis : - Caminho para a diretoria onde está instalado o Clustalw2 <diretoria do clustalw2>
                     - Ficheiro .fasta que contém as varias sequencias para efetuar alinhamento <input_file>
-        Returns: ***Tiago da aqui input***
+        Returns: Cria dois ficheiros (.aln e .dnd) com o resultado do alinhamento multiplo
         '''
         try:
-            print(" É necessario possuir um ficheiro .fasta com as sequencias a alinhar para realizar esta operação")
             args = arg.split(' ')
             dir = args[0]
             file = args[1]
@@ -354,6 +392,60 @@ class shell(Cmd):
             Mutiple.alignment(Random)
         except:
             print('Erro de execução')
+
+    def do_arvore_filogenetica(self,arg):
+        '''
+        ***É necessário possuir um ficheiro .dnd resultante de um alinhamento para realizar esta operação ***
+        > Realiza o Alinhamento Multiplo entre várias sequencias
+        Variaveis : - Ficheiro .dnd que contém o resultado do alinhamento alinhamento <input_file>
+        Returns: obtem ficheiro da arvore filogenetica.
+        '''
+        args = arg.split(' ')
+        nome = args[0]
+        file = args[1]
+        Random = nome + '_1'
+        Random = Phylo(nome, file)
+        Phylo.obter_arvore(Random)
+
+    def do_analise_alinhamento(self,arg):
+        '''
+        ***É necessário possuir um ficheiro .aln resultante de um alinhamento para realizar esta operação ***
+        > Realiza o Alinhamento Multiplo entre várias sequencias
+        Variaveis : - Nome para o ficheiro obtido <name>
+                    - Ficheiro .aln que contém o resultado do alinhamento alinhamento <input_file>
+        Returns: obtem ficheiro .txt com o resumo do alinhamento.
+        '''
+        args = arg.split(' ')
+        nome = args[0]
+        file = args[1]
+        Random = nome + '_1'
+        Random = Align(nome, file)
+        Align.summary_alinhamento(Random)
+
+    def do_tabela_substituição(self,arg):
+        '''
+        ***É necessário possuir um ficheiro .aln resultante de um alinhamento para realizar esta operação ***
+        > Realiza o Alinhamento Multiplo entre várias sequencias
+        Variaveis : - nome para o ficheiro de output <name>
+                    - Ficheiro .aln que contém o resultado do alinhamento alinhamento <input_file>
+        Returns: obtem ficheiro .txt com a tabela de substituição do alinhamento.
+        '''
+        args = arg.split(' ')
+        nome = args[0]
+        file = args[1]
+        Random = nome + '_1'
+        Random = Align(nome, file)
+        Align.table_alinhamento(Random)
+
+    def do_histograma(self, arg):
+        '''
+        ***É necessário possuir um ficheiro .aln resultante de um alinhamento para realizar esta operação ***
+        > Realiza o Alinhamento Multiplo entre várias sequencias
+        Variaveis : - Ficheiro .fasta que contém as sequencias utilizadas alinhamento alinhamento <input_file>
+        Returns: obtem o histograma do tamanho das seqs.
+        '''
+        Random = hist(arg)
+        hist.histogram(Random)
 
     def do_menu(self):
         print(self.intro)
