@@ -64,7 +64,6 @@ class shell(Cmd):
     def do_procurar_id_swiss(self):
         try:
             option = input('introduzir query a pesquisar: \n 1 - Orf3a \n 2 - FGA \n 3 - FGB \n 4 - FGG \n 5 - outro não predefinido \n Opção:')
-            file = input('tipo de ficheiro a obter: \n 1- fasta \n 2 - genbank \n Opção: ')
             if option == '1':
                 pass
             elif option == '2':
@@ -76,10 +75,6 @@ class shell(Cmd):
             elif option == '5':
                 print(" Necessário saber o id na base de dados na Swiss Prot ")
                 pass
-            if file == '1':
-                    pass
-            elif file == '2':
-                    pass
 
         except:
             print('Opção não valida')
