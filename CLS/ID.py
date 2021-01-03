@@ -2,9 +2,8 @@ from Bio import Entrez
 from Bio import SeqIO
 
 class ID:
-    def __init__(self, query, Orgn, database, res, email, file_output):
+    def __init__(self, query, database, res, email, file_output):
         self.query = query
-        self.Orgn = Orgn
         self.database = database
         self.resultados = res
         self.email = email
@@ -12,9 +11,20 @@ class ID:
 
     def SEARCH(self):
         Entrez.email = self.email
-        handle = Entrez.esearch(db=self.database, sort='relevance', term= self.Orgn + self.query + ', RefSeq', retmax=self.resultados)
-        #Refseq para ORF3, corona virus 2
-        #RefSeqGene para FGA,FGB,FGG
+        if self.query == "FGA" or "FGB" or "FGG":
+            if self.database == "nucleotide":
+                handle = Entrez.esearch(db=self.database, sort='relevance', term= "Homo Sapiens[ORGN] " + self.query + ', RefSeqGene', retmax=self.resultados)
+            elif self.database == 'protein':
+                handle = Entrez.esearch(db=self.database, sort='relevance',term="Homo Sapiens[ORGN] " + self.query + ', RefSeq', retmax=self.resultados)
+            else: print ( "ERROR")
+
+        elif self.query == "ORF3a":
+            if self.database == "nucleotide":
+                handle = Entrez.esearch(db=self.database, sort='relevance',term="Corona virus 2 " + self.query + ', RefSeq', retmax=self.resultados)
+            elif self.database == 'protein':
+                handle = Entrez.esearch(db=self.database, sort='relevance',term="Coronavirus 2 " + self.query + ', RefSeq', retmax=self.resultados)
+        else:
+            handle = Entrez.esearch(db=self.database, sort='relevance',term= self.query + ', RefSeqGene', retmax=self.resultados)
         record = Entrez.read(handle)
         idlist = record['IdList']
         print(idlist)
@@ -54,9 +64,3 @@ class Prot_ID:
         file = open(name, 'w+')
         file.write('> ID:' + self.id + '_'+ str(tam) + 'bp' + '_' +  str(tax) + '_' + org + '\n' + seq + '\n')
         return seq
-
-
-# db = 'protein', para seqs de proteina de FGA,FGB,FGG; ORGN = Homo Sapiens [Orgn]
-# db = 'protein', para seqs de proteina de ORF3a; ORGN = Coronavirus 2
-# db = 'Nucleotide' para seqs de DNA de FGA,FGB,FGG; ORGN = Homo Sapiens [Orgn]
-# db = 'Nucleotide' para seqs de DNA da ORF3a; ORGN = Corona virus 2
