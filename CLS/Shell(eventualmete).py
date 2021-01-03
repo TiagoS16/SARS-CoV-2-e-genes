@@ -25,30 +25,20 @@ class shell(Cmd):
             option = input('introduzir query a pesquisar: \n 1 - Orf3a \n 2 - FGA \n 3 - FGB \n 4 - FGG \n 5 - outro não predefinido \n Opção:')
             file = input('tipo de ficheiro a obter: \n 1- fasta \n 2 - genbank \n Opção: ')
             if option == '1':
-                if file == '1':
-                    pass
-                elif file == '2':
-                    pass
+                pass
             elif option == '2':
-                if file == '1':
-                    pass
-                elif file == '2':
-                    pass
+                pass
             elif option == '3':
-                if file == '1':
-                    pass
-                elif file == '2':
-                    pass
+                pass
             elif option == '4':
-                if file == '1':
-                    pass
-                elif file == '2':
-                    pass
+                pass
             elif option == '5':
-                if file == '1':
+                pass
+            if file == '1':
                     pass
-                elif file == '2':
+            elif file == '2':
                     pass
+
         except: print('Opção não valida')
 
     def do_procurar_id_protein(self):
@@ -56,31 +46,19 @@ class shell(Cmd):
             option = input('introduzir query a pesquisar: \n 1 - Orf3a \n 2 - FGA \n 3 - FGB \n 4 - FGG \n 5 - outro não predefinido \n Opção:')
             file = input('tipo de ficheiro a obter: \n 1- fasta \n 2 - genbank \n Opção: ')
             if option == '1':
-                if file == '1':
-                    pass
-                elif file == '2':
-                    pass
+                pass
             elif option == '2':
-                if file == '1':
-                    pass
-                elif file == '2':
-                    pass
+                pass
             elif option == '3':
-                if file == '1':
-                    pass
-                elif file == '2':
-                    pass
+                pass
             elif option == '4':
-                if file == '1':
-                    pass
-                elif file == '2':
-                    pass
-            elif option == '5':+
-
-                if file == '1':
-                    pass
-                elif file == '2':
-                    pass
+                pass
+            elif option == '5':
+                pass
+            if file == '1':
+                pass
+            elif file == '2':
+                pass
         except: print('Opção não valida')
 
     def do_procurar_id_swiss(self):
@@ -88,31 +66,21 @@ class shell(Cmd):
             option = input('introduzir query a pesquisar: \n 1 - Orf3a \n 2 - FGA \n 3 - FGB \n 4 - FGG \n 5 - outro não predefinido \n Opção:')
             file = input('tipo de ficheiro a obter: \n 1- fasta \n 2 - genbank \n Opção: ')
             if option == '1':
-                if file == '1':
-                    pass
-                elif file == '2':
-                    pass
+                pass
             elif option == '2':
-                if file == '1':
-                    pass
-                elif file == '2':
-                    pass
+                pass
             elif option == '3':
-                if file == '1':
-                    pass
-                elif file == '2':
-                    pass
+                pass
             elif option == '4':
-                if file == '1':
-                    pass
-                elif file == '2':
-                    pass
+                pass
             elif option == '5':
                 print(" Necessário saber o id na base de dados na Swiss Prot ")
-                if file == '1':
+                pass
+            if file == '1':
                     pass
-                elif file == '2':
+            elif file == '2':
                     pass
+
         except:
             print('Opção não valida')
 
