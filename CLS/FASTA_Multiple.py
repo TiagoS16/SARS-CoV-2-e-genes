@@ -10,19 +10,22 @@ class Create_fasta:
     RETURNS:
         devolve o ficheiro output gravado na diretoria com as sequencias compiladas
     '''
-    def __init__(self, file, output, database):
+    def __init__(self, name, file, database):
         self.file = file
-        self.output = output
+        self.name = name
         self.db = database
 
     def m_blast(self):
-        ficheiro_output = open(self.output, 'w+')
+        print('A criar ficheiro...')
+        Output = self.name + 'fullhomo_AC.fasta'
+        ficheiro_output = open(Output, 'w+')
         ficheiro = open(self.file, 'r')
         b_file = ficheiro.readlines()
+        print('A recolher informações...')
         for a in b_file:
             Entrez.email = 'example@gmail.com'
             File = Entrez.efetch(db= self.db, id= a, retmode='text', rettype= 'fasta')
             read = SeqIO.read(File, 'fasta')
             File.close()
             ficheiro_output.write('>' + a + str(read.seq) + '\n' + '\n')
-
+        print('Ficheiro gravado sobre o nome ' + Output)

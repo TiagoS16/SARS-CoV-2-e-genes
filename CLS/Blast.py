@@ -2,7 +2,7 @@ from Bio import SeqIO
 from Bio.Blast import NCBIWWW
 
 class Blast:
-    def __init__(self, ficheiro , blast, format):
+    def __init__(self, name, ficheiro , blast, format):
         '''
         VARIAVEIS:
             Self = Acession number
@@ -14,6 +14,7 @@ class Blast:
         self.ficheiro = ficheiro
         self.format = format
         self.blast = blast
+        self.name = name
         if self.blast == 'blastn':
             self.database = 'nt'
         elif self.blast == 'blastp' or 'blastx':
@@ -29,9 +30,15 @@ class Blast:
             RETURNS:
                 Gera um ficheiro .xml com o resultado do blastn contra   a database dos nucleotidos .
             '''
+        print('Iniciar blast...')
         record = SeqIO.read(self.ficheiro, format= self.format)
         result_handle = NCBIWWW.qblast(self.blast, self.database, record.seq)
-        name = self + "_" + self.blast + ".xml"
+        name = self.name + "_" + str(self.blast) + ".xml"
+        print('A guardar ficheiro com blast...')
         with open(name, "w") as out_handle:
             out_handle.write(result_handle.read())
         result_handle.close()
+        print('Blast guardado no ficheiro ' + name)
+
+blast FGB FGB_Nucleotide.fasta fasta
+test = Blast(FGB, FGB_Nucleotide.fasta, 'blastp' fasta)
