@@ -1,5 +1,5 @@
 from cmd import *
-from ID import ID, Prot_ID, Get_info
+from ID import ID, Prot_ID, Get_info, Pubmed
 from Blast import Blast
 from Homologas import homologas
 from FASTA_Multiple import Create_fasta
@@ -19,6 +19,7 @@ class shell(Cmd):
         guardar_nucleotide <nome_para_ficheiro> <id> -> guardar ficheiro apartir do id na database Nucleotide NCBI
         guardar_protein <nome_para_ficheiro> <id> ->guardar ficheiro apartir do id na database Protein NCBI
         Info_genbank <ficheiro> - obter informação contida num genbank 
+        Pubmed_search <name> <query> <resultados> - pesquisa no pubmed por relevancia
         procurar_id_swiss -> procurar id Na Swiss Prot e guardar ficheiro
         estrutura_proteina -> atraves do id do PDB obter a estrutura 3D da proteina
         blast <nome_para_ficheiro> <input_file> <formato_do_input_file> -> realizar blast
@@ -168,8 +169,31 @@ class shell(Cmd):
     def do_Info_genbank(self, arg):
         '''
         *** É necessario um genbank para realizar esta operação ***
-
+        Variaveis:  - ficheiro: Ficheiro no formato genbank
+        Returns: Imprime na consola a informação presente no genbank
         '''
+        Random = Get_info(arg)
+        Get_info.gb_inf(Random)
+
+    def do_Pubmed_search(selfself,arg):
+        '''
+        Variaveis:  - Name: nome a dar ao ficheiro .txt (estrutura: Pubmed_*name*.txt)
+                    - query: query a pesquisar
+                    - resultados: numero maximo de resultados a devolver pelo Pubmed
+        Returns: Cria um .txt com a informação dos hits
+        '''
+        try:
+            print("Iniciar processo...")
+            args = arg.split(' ')
+            name = args[0]
+            query = ''
+            for i in range(1,len(args)-1):
+                query = query + ' ' + args[i]
+            res = args[len(args)-1]
+            Random = Pubmed(name, query, res)
+            Pubmed.procura(Random)
+        except:
+            print('Erro de execução')
 
     def do_procurar_id_swiss(self,arg):
         '''

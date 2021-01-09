@@ -1,5 +1,7 @@
 from Bio.Blast import NCBIXML
+from Bio import Entrez
 from Bio import SearchIO
+from Bio import Medline
 
 class homologas:
     def __init__(self, name, ficheiro_blast, E_VALUE_THRESH = None):
@@ -51,7 +53,6 @@ class homologas:
         print('Iniciar processo...')
         result_handle = open(self.ficheiro)
         blast_record = NCBIXML.read(result_handle)
-        AC = self.ficheiro.split('_')
         FILE2 = str('ACHomo_' + self.name + '.txt')
         ficheiro_output2 = open(FILE2, 'w+')
         D = {}
@@ -91,4 +92,3 @@ class homologas:
                         HSP[alignment.accession] =  1
                         N= '{:>9}'.format(str(p)) + '{:8d}'.format(HSP[alignment.accession]) + '      ' + alignment.title
         print('Ficheiro guardado com o nome de ' + FILE)
-

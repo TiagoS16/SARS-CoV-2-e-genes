@@ -1,5 +1,6 @@
 from Bio import Entrez
 from Bio import SeqIO
+from Bio import Medline
 
 class ID:
     def __init__(self, query, database, res, email, file_output, id = None):
@@ -63,7 +64,7 @@ class Prot_ID:
         seq = seq_record.seq
         tax = seq_record.annotations["taxonomy"]
         org = seq_record.annotations["organism"]
-        name = self.id + '_prot.txt'
+        name = self.id + '_prot.fasta'
         file = open(name, 'w+')
         file.write('> ID:' + self.id + '_'+ str(tam) + 'bp' + '_' +  str(tax) + '_' + org + '\n' + str(seq) + '\n')
         print('Ficheiro guardado segundo ' + name)
@@ -83,3 +84,26 @@ class Get_info:
               'FEATURES:')
         for i in record.features:
             print(i)
+
+
+class Pubmed:
+    def __init__(self,nome, query, res):
+        self.query = query
+        self.name = nome
+        self.res = res
+
+    def procura(self):
+        Entrez.email = 'example@gmail.com'
+        handle = Entrez.esearch(db='Pubmed', sort='relevance', term=self.query, retmax=self.res)
+        record = Entrez.read(handle)
+        handle.close()
+        idlist = record['IdList']
+        handle = Entrez.efetch(db= 'Pubmed', id=idlist, rettype="medline", retmode="text")
+        records = Medline.parse(handle)
+        FILE = str('Pubmed_' + self.name + '.txt')
+        ficheiro_output = open(FILE, 'w+')
+        print('A guardar ficheiro...')
+        for record in records:
+            x = "title: " + str(record.get("TI", "?")) + '\n' + 'abstract: ' + str(record.get('AB', '?')) + '\n' + "authors: " + str(record.get("AU", "?")) + '\n' + "source: " + str(record.get("SO", "?")) + '\n \n'
+            ficheiro_output.write(x)
+        print('ficheiro guardado segundo: ' + FILE)
