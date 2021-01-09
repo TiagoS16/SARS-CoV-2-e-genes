@@ -4,7 +4,7 @@ from Blast import Blast
 from Homologas import homologas
 from FASTA_Multiple import Create_fasta
 from Multiple_Alignment import Mutiple
-from PDB_F import PDB
+#from PDB_F import PDB
 from Phylo import Phylo
 from Anal_multp import Align, hist
 
@@ -272,20 +272,22 @@ class shell(Cmd):
                     recebe o valor de 0.05 <E-value threshold>
         Returns: Ficheiro .txt com o report do blast
         '''
+
         try:
             args = arg.split(' ')
             if len(args) == 3:
                 name = args[0]
                 file = args[1]
-                E_value = args[2]
+                E_value = float(args[2])
+                print(args)
             elif len(args) == 2:
                 name = args[0]
                 file = args[1]
                 E_value = None
             else:
                 print('Argumentação errada!')
-            Random = name + '_1'
-            Random = homologas(name,file,E_value)
+            print(name, file, E_value)
+            Random = homologas(name,file, E_value)
             homologas.BLAST_REPORT(Random)
         except: print('Erro de execução')
 
@@ -304,7 +306,7 @@ class shell(Cmd):
             if len(args) == 3:
                 name = args[0]
                 file = args[1]
-                E_value = args[2]
+                E_value = float(args[2])
             elif len(args) == 2:
                 name = args[0]
                 file = args[1]
@@ -332,7 +334,7 @@ class shell(Cmd):
             if len(args) == 3:
                 name = args[0]
                 file = args[1]
-                E_value = args[2]
+                E_value = float(args[2])
             elif len(args) == 2:
                 name = args[0]
                 file = args[1]
@@ -363,7 +365,7 @@ class shell(Cmd):
                 name = args[0]
                 file = args[1]
                 tipo = args[2]
-                E_value = args[3]
+                E_value = float(args[3])
             elif len(args) == 3:
                 name = args[0]
                 file = args[1]

@@ -84,10 +84,11 @@ class homologas:
                 if hsp.expect < self.E_value:
                     if alignment.accession in HSP:
                         HSP[alignment.accession] = HSP[alignment.accession] + 1
-                        N= '{:>8}'.format(str(p)) + '{:8d}'.format(HSP[alignment.accession]) + '      ' + alignment.title
+                        N= '{:>9}'.format(str(p)) + '{:8d}'.format(HSP[alignment.accession]) + '      ' + alignment.title
                     else:
                         ficheiro_output.write(N + '\n')
                         p = p + 1
                         HSP[alignment.accession] =  1
                         N= '{:>9}'.format(str(p)) + '{:8d}'.format(HSP[alignment.accession]) + '      ' + alignment.title
         print('Ficheiro guardado com o nome de ' + FILE)
+
