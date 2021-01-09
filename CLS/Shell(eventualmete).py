@@ -1,10 +1,10 @@
 from cmd import *
-from ID import ID, Prot_ID
+from ID import ID, Prot_ID, Get_info, Pubmed
 from Blast import Blast
 from Homologas import homologas
 from FASTA_Multiple import Create_fasta
 from Multiple_Alignment import Mutiple
-from PDB_F import PDB
+#from PDB_F import PDB
 from Phylo import Phylo
 from Anal_multp import Align, hist
 
@@ -18,12 +18,14 @@ class shell(Cmd):
         procurar_id_protein -> procurar id na database Protein NCBI para uma pesquisa e guardar ficheiro
         guardar_nucleotide <nome_para_ficheiro> <id> -> guardar ficheiro apartir do id na database Nucleotide NCBI
         guardar_protein <nome_para_ficheiro> <id> ->guardar ficheiro apartir do id na database Protein NCBI
+        Info_genbank <ficheiro> - obter informação contida num genbank 
+        Pubmed_search <name> <query> <resultados> - pesquisa no pubmed por relevancia
         procurar_id_swiss -> procurar id Na Swiss Prot e guardar ficheiro
         estrutura_proteina -> atraves do id do PDB obter a estrutura 3D da proteina
         blast <nome_para_ficheiro> <input_file> <formato_do_input_file> -> realizar blast
         report_blast <nome_para_ficheiro> <input_file_blast> <E-value threshold> -> Obter o report do blast 
         homologia <nome_para_ficheiro> <input_file_blast> <E-value threshold(opcional)> -> obter os hits do blast
-        homologo_AC <nome_para_ficheiro> <input_file_blast> <E-value threshold(opcional)> -> obter os AC dos hits
+        homologo_AC <nome_para_ficheiro> <input_file_blast> <E-value threshold(opcional)> -> obter os Acession Numbers dos hits
         fasta_homologos <nome_para_ficheiro> <input_file_blast> <(Nut/Ppt)> <E-value threshold(opcional)> obter a 
         sequencia total dos hits atraves dos AC
         alinhamento_multiplo <diretoria do clustalw2> <Input_file> -> 
@@ -164,6 +166,35 @@ class shell(Cmd):
         except:
             print('Erro de execução')
 
+    def do_Info_genbank(self, arg):
+        '''
+        *** É necessario um genbank para realizar esta operação ***
+        Variaveis:  - ficheiro: Ficheiro no formato genbank
+        Returns: Imprime na consola a informação presente no genbank
+        '''
+        Random = Get_info(arg)
+        Get_info.gb_inf(Random)
+
+    def do_Pubmed_search(selfself,arg):
+        '''
+        Variaveis:  - Name: nome a dar ao ficheiro .txt (estrutura: Pubmed_*name*.txt)
+                    - query: query a pesquisar
+                    - resultados: numero maximo de resultados a devolver pelo Pubmed
+        Returns: Cria um .txt com a informação dos hits
+        '''
+        try:
+            print("Iniciar processo...")
+            args = arg.split(' ')
+            name = args[0]
+            query = ''
+            for i in range(1,len(args)-1):
+                query = query + ' ' + args[i]
+            res = args[len(args)-1]
+            Random = Pubmed(name, query, res)
+            Pubmed.procura(Random)
+        except:
+            print('Erro de execução')
+
     def do_procurar_id_swiss(self,arg):
         '''
         *** Apenas devolve ficheiros no formato .fasta ***
@@ -205,16 +236,16 @@ class shell(Cmd):
         try:
             option = int(input('introduzir query a pesquisar: \n 1 - ORF3a \n 2 - FGA \n 3 - FGB \n 4 - FGG \n 5 - outro não predefinido \n Opção:'))
             if option == 1:
-                ORF3a = PDB('***')
-
+                ORF3a = PDB('6XDC')
+                PDB.PDB(ORF3a)
             elif option == 2:
-                FGA = PDB('***')
+                FGA = PDB('1L39')
                 PDB.PDB(FGA)
             elif option == 3:
-                FGB = PDB('***')
+                FGB = PDB('1FZA')
                 PDB.PDB(FGB)
             elif option == 4:
-                FGG = PDB('***')
+                FGG = PDB('1DUG')
                 PDB.PDB(FGG)
             elif option == 5:
                 id = input('Id do PBD a pesquisar : ')
@@ -265,20 +296,22 @@ class shell(Cmd):
                     recebe o valor de 0.05 <E-value threshold>
         Returns: Ficheiro .txt com o report do blast
         '''
+
         try:
             args = arg.split(' ')
             if len(args) == 3:
                 name = args[0]
                 file = args[1]
-                E_value = args[2]
+                E_value = float(args[2])
+                print(args)
             elif len(args) == 2:
                 name = args[0]
                 file = args[1]
                 E_value = None
             else:
                 print('Argumentação errada!')
-            Random = name + '_1'
-            Random = homologas(name,file,E_value)
+            print(name, file, E_value)
+            Random = homologas(name,file, E_value)
             homologas.BLAST_REPORT(Random)
         except: print('Erro de execução')
 
@@ -297,7 +330,7 @@ class shell(Cmd):
             if len(args) == 3:
                 name = args[0]
                 file = args[1]
-                E_value = args[2]
+                E_value = float(args[2])
             elif len(args) == 2:
                 name = args[0]
                 file = args[1]
@@ -325,7 +358,7 @@ class shell(Cmd):
             if len(args) == 3:
                 name = args[0]
                 file = args[1]
-                E_value = args[2]
+                E_value = float(args[2])
             elif len(args) == 2:
                 name = args[0]
                 file = args[1]
@@ -356,7 +389,7 @@ class shell(Cmd):
                 name = args[0]
                 file = args[1]
                 tipo = args[2]
-                E_value = args[3]
+                E_value = float(args[3])
             elif len(args) == 3:
                 name = args[0]
                 file = args[1]
@@ -378,7 +411,7 @@ class shell(Cmd):
 
     def do_alinhamento_multiplo(self, arg):
         '''
-        ***É necessário possuir um ficheiro .fasta com sequencias para realizar esta operação ***
+        *** É necessário possuir um ficheiro .fasta com sequencias para realizar esta operação ***
         > Realiza o Alinhamento Multiplo entre várias sequencias
         Variaveis : - Caminho para a diretoria onde está instalado o Clustalw2 <diretoria do clustalw2>
                     - Ficheiro .fasta que contém as varias sequencias para efetuar alinhamento <input_file>
