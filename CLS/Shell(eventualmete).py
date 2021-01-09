@@ -387,7 +387,7 @@ class shell(Cmd):
 
     def do_alinhamento_multiplo(self, arg):
         '''
-        ***É necessário possuir um ficheiro .fasta com sequencias para realizar esta operação ***
+        *** É necessário possuir um ficheiro .fasta com sequencias para realizar esta operação ***
         > Realiza o Alinhamento Multiplo entre várias sequencias
         Variaveis : - Caminho para a diretoria onde está instalado o Clustalw2 <diretoria do clustalw2>
                     - Ficheiro .fasta que contém as varias sequencias para efetuar alinhamento <input_file>
