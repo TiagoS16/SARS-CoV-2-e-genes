@@ -91,6 +91,3 @@ class homologas:
                         HSP[alignment.accession] =  1
                         N= '{:>9}'.format(str(p)) + '{:8d}'.format(HSP[alignment.accession]) + '      ' + alignment.title
         print('Ficheiro guardado com o nome de ' + FILE)
-
-test = homologas('test', 'FGB_DNA_blast.xml', None)
-homologas.BLAST_REPORT(test)
