@@ -12,8 +12,9 @@ def PDB(ID):
     pymol.cmd.load(file, ID)
     pymol.cmd.disable("all")
     pymol.cmd.enable(ID)
+    pymol.cmd.orient()
     pymol.cmd.zoom()
-    pymol.cmd.png("Protein2.png", 3000, 3000, dpi=500, ray=1)
+    pymol.cmd.png("Protein.png", 3000, 3000, dpi=500, ray=1)
 
     pymol.cmd.quit()
 
