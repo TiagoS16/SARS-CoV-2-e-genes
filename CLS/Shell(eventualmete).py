@@ -4,7 +4,7 @@ from Blast import Blast
 from Homologas import homologas
 from FASTA_Multiple import Create_fasta
 from Multiple_Alignment import Mutiple
-#from PDB_F import PDB
+from PDB_F import PDB
 from Phylo import Phylo
 from Anal_multp import Align, hist
 
