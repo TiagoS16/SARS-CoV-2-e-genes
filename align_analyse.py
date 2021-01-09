@@ -1,5 +1,5 @@
 from Bio import AlignIO
-align = AlignIO.read("SeqsHomologas_FGG_DNA_blast.xml.aln", "clustal")
+align = AlignIO.read("entrez_prot.aln", "clustal")
 print(align)
 print("Number of rows: %i" % len(align))
 
@@ -10,6 +10,7 @@ for record in align:
 substitutions = align.substitutions
 print(substitutions)
 
+#Histogram of homologous sequence lenghts
 from Bio import SeqIO
 sizes = [len(rec) for rec in SeqIO.parse("SeqsHomologas_FGG_DNA_blast.xml.fasta", "fasta")]
 len(sizes), min(sizes), max(sizes)
