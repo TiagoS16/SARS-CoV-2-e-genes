@@ -65,7 +65,21 @@ class Prot_ID:
         org = seq_record.annotations["organism"]
         name = self.id + '_prot.txt'
         file = open(name, 'w+')
-        file.write('> ID:' + self.id + '_'+ str(tam) + 'bp' + '_' +  str(tax) + '_' + org + '\n' + seq + '\n')
+        file.write('> ID:' + self.id + '_'+ str(tam) + 'bp' + '_' +  str(tax) + '_' + org + '\n' + str(seq) + '\n')
         print('Ficheiro guardado segundo ' + name)
         return seq
 
+class Get_info:
+    def __init__(self, genbank):
+        self.gen = genbank
+
+    def gb_inf(self):
+        record = SeqIO.read(self.gen, 'genbank')
+        id = record.name
+        tam = len(record.seq)
+        seq = record.seq
+        source = record.annotations["source"]
+        print(' ID:', id, '\n', 'SEQUENCE LENGTH:', tam, 'bp', '\n', 'SEQUENCE:', seq, '\n', 'SOURCE:', source, '\n',
+              'FEATURES:')
+        for i in record.features:
+            print(i)

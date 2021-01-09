@@ -75,12 +75,22 @@ class homologas:
         blast_record = NCBIXML.read(result_handle)
         FILE = str('Report_' + self.name + '.txt')
         ficheiro_output = open(FILE, 'w+')
+        HSP = {}
+        p = 1
         print('A criar ficheiro...')
+        N = 'Program: blastn (2.11.0+) \n Hits: ----  -----  ----------------------------------------------------------  \n        #      HSP    ID + description \n       ----  -----  ---------------------------------------------------------- \n'
         for alignment in blast_record.alignments:
             for hsp in alignment.hsps:
                 if hsp.expect < self.E_value:
-                    N = ("****Alignment****" + '\n' + "sequence:" + alignment.title + '\n' + "length:" + str(alignment.length) + '\n' + "e value:" + str(hsp.expect) +'\n' + '\n')
-                    ficheiro_output.write(N)
-        blast_qresult = SearchIO.read(self.ficheiro, "blast-xml")
-        ficheiro_output.write(str(blast_qresult))
+                    if alignment.accession in HSP:
+                        HSP[alignment.accession] = HSP[alignment.accession] + 1
+                        N= '{:>8}'.format(str(p)) + '{:8d}'.format(HSP[alignment.accession]) + '      ' + alignment.title
+                    else:
+                        ficheiro_output.write(N + '\n')
+                        p = p + 1
+                        HSP[alignment.accession] =  1
+                        N= '{:>9}'.format(str(p)) + '{:8d}'.format(HSP[alignment.accession]) + '      ' + alignment.title
         print('Ficheiro guardado com o nome de ' + FILE)
+
+test = homologas('test', 'FGB_DNA_blast.xml', None)
+homologas.BLAST_REPORT(test)
