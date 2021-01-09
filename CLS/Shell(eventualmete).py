@@ -1,10 +1,10 @@
 from cmd import *
-from ID import ID, Prot_ID
+from ID import ID, Prot_ID, Get_info
 from Blast import Blast
 from Homologas import homologas
 from FASTA_Multiple import Create_fasta
 from Multiple_Alignment import Mutiple
-from PDB_F import PDB
+#from PDB_F import PDB
 from Phylo import Phylo
 from Anal_multp import Align, hist
 
@@ -18,12 +18,13 @@ class shell(Cmd):
         procurar_id_protein -> procurar id na database Protein NCBI para uma pesquisa e guardar ficheiro
         guardar_nucleotide <nome_para_ficheiro> <id> -> guardar ficheiro apartir do id na database Nucleotide NCBI
         guardar_protein <nome_para_ficheiro> <id> ->guardar ficheiro apartir do id na database Protein NCBI
+        Info_genbank <ficheiro> - obter informação contida num genbank 
         procurar_id_swiss -> procurar id Na Swiss Prot e guardar ficheiro
         estrutura_proteina -> atraves do id do PDB obter a estrutura 3D da proteina
         blast <nome_para_ficheiro> <input_file> <formato_do_input_file> -> realizar blast
         report_blast <nome_para_ficheiro> <input_file_blast> <E-value threshold> -> Obter o report do blast 
         homologia <nome_para_ficheiro> <input_file_blast> <E-value threshold(opcional)> -> obter os hits do blast
-        homologo_AC <nome_para_ficheiro> <input_file_blast> <E-value threshold(opcional)> -> obter os AC dos hits
+        homologo_AC <nome_para_ficheiro> <input_file_blast> <E-value threshold(opcional)> -> obter os Acession Numbers dos hits
         fasta_homologos <nome_para_ficheiro> <input_file_blast> <(Nut/Ppt)> <E-value threshold(opcional)> obter a 
         sequencia total dos hits atraves dos AC
         alinhamento_multiplo <diretoria do clustalw2> <Input_file> -> 
@@ -164,6 +165,12 @@ class shell(Cmd):
         except:
             print('Erro de execução')
 
+    def do_Info_genbank(self, arg):
+        '''
+        *** É necessario um genbank para realizar esta operação ***
+
+        '''
+
     def do_procurar_id_swiss(self,arg):
         '''
         *** Apenas devolve ficheiros no formato .fasta ***
@@ -205,16 +212,16 @@ class shell(Cmd):
         try:
             option = int(input('introduzir query a pesquisar: \n 1 - ORF3a \n 2 - FGA \n 3 - FGB \n 4 - FGG \n 5 - outro não predefinido \n Opção:'))
             if option == 1:
-                ORF3a = PDB('***')
-
+                ORF3a = PDB('6XDC')
+                PDB.PDB(ORF3a)
             elif option == 2:
-                FGA = PDB('***')
+                FGA = PDB('1L39')
                 PDB.PDB(FGA)
             elif option == 3:
-                FGB = PDB('***')
+                FGB = PDB('1FZA')
                 PDB.PDB(FGB)
             elif option == 4:
-                FGG = PDB('***')
+                FGG = PDB('1DUG')
                 PDB.PDB(FGG)
             elif option == 5:
                 id = input('Id do PBD a pesquisar : ')
