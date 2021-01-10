@@ -263,23 +263,25 @@ class shell(Cmd):
         '''
         try:
             args = arg1.split(' ')
-            name = args[0]
-            file = args[1]
-            format = args[2]
-            Random = name + '_1'
-            print(name, file, format)
-            option = int(input('introduzir Blast a realizar: \n 1 - Blastp \n 2 - Blastn \n 3 - Blastx \n Opção:'))
-            if option == 1:
-                Random = Blast(name, str(file), 'blastp', str(format))
-                Blast.blast(Random)
-            elif option == 2:
-                Random = Blast(name, file, 'blastn', format)
-                Blast.blast(Random)
-            elif option == 3:
-                Random = Blast(name, file, 'blastx', format)
-                Blast.blast(Random)
+            if len(args) != 3:
+                print('Argumentação errada')
             else:
-                print('Opção inválida')
+                name = args[0]
+                file = args[1]
+                format = args[2]
+                Random = name + '_1'
+                option = int(input('introduzir Blast a realizar: \n 1 - Blastp \n 2 - Blastn \n 3 - Blastx \n Opção:'))
+                if option == 1:
+                    Random = Blast(name, str(file), 'blastp', str(format))
+                    Blast.blast(Random)
+                elif option == 2:
+                    Random = Blast(name, file, 'blastn', format)
+                    Blast.blast(Random)
+                elif option == 3:
+                    Random = Blast(name, file, 'blastx', format)
+                    Blast.blast(Random)
+                else:
+                    print('Opção inválida')
         except:
             print('Erro de execução')
 
@@ -435,9 +437,16 @@ class shell(Cmd):
         Variaveis : - Ficheiro .dnd que contém o resultado do alinhamento alinhamento <input_file>
         Returns: Imprime a arvore filogenetica na consola
         '''
-        file = arg
-        Random = Phylo(file)
-        Phylo.obter_arvore(Random)
+        try:
+            args = arg.split(' ')
+            if len(args) != 1:
+                print('Parametros errados')
+            else:
+                file = args
+                Random = Phylo(file)
+                Phylo.obter_arvore(Random)
+        except:
+            print('Erro de execução')
 
     def do_analise_alinhamento(self,arg):
         '''
@@ -447,12 +456,18 @@ class shell(Cmd):
                     - Ficheiro .aln que contém o resultado do alinhamento alinhamento <input_file>
         Returns: obtem ficheiro .txt com o resumo do alinhamento.
         '''
-        args = arg.split(' ')
-        nome = args[0]
-        file = args[1]
-        Random = nome + '_1'
-        Random = Align(nome, file)
-        Align.summary_alinhamento(Random)
+        try:
+            args = arg.split(' ')
+            if len(args) != 2:
+                print('Parametros errados')
+            else:
+                nome = args[0]
+                file = args[1]
+                Random = nome + '_1'
+                Random = Align(nome, file)
+                Align.summary_alinhamento(Random)
+        except:
+            print('Erro de execução')
 
     def do_tabela_substituição(self,arg):
         '''
@@ -462,12 +477,18 @@ class shell(Cmd):
                     - Ficheiro .aln que contém o resultado do alinhamento alinhamento <input_file>
         Returns: obtem ficheiro .txt com a tabela de substituição do alinhamento.
         '''
-        args = arg.split(' ')
-        nome = args[0]
-        file = args[1]
-        Random = nome + '_1'
-        Random = Align(nome, file)
-        Align.table_alinhamento(Random)
+        try:
+            args = arg.split(' ')
+            if len(args) != 2:
+                print('Parametros errados')
+            else:
+                nome = args[0]
+                file = args[1]
+                Random = nome + '_1'
+                Random = Align(nome, file)
+                Align.table_alinhamento(Random)
+        except:
+            print('Erro de execução')
 
     def do_histograma(self, arg):
         '''
@@ -476,8 +497,15 @@ class shell(Cmd):
         Variaveis : - Ficheiro .fasta que contém as sequencias utilizadas alinhamento alinhamento <input_file>
         Returns: obtem o histograma do tamanho das seqs.
         '''
-        Random = hist(arg)
-        hist.histogram(Random)
+        try:
+            args = arg.split(' ')
+            if len(args) != 1:
+                print('Parametros errados')
+            else:
+                Random = hist(args)
+                hist.histogram(Random)
+        except:
+            print('Erro de execução')
 
     def do_menu(self):
         print(self.intro)
