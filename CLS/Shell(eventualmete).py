@@ -26,7 +26,7 @@ class shell(Cmd):
         fasta_homologos <nome_para_ficheiro> <input_file_blast> <(Nut/Ppt)> <E-value threshold(opcional)> obter a 
         sequencia total dos hits atraves dos AC
         alinhamento_multiplo <diretoria do clustalw2> <Input_file> -> 
-        arvore_filogenetica <input_file> ??????? ** codigo nao atualizado **
+        arvore_filogenetica <input_file> ->
         analise_alinhamento <name> <input_file>
         tabela_substituição <name> <input_file>
         histograma <input_file> 
@@ -394,13 +394,14 @@ class shell(Cmd):
                 E_value = None
             else:
                 print('Argumentação errada!')
-            Random = name + '_1'
             Random = homologas(name, file, E_value)
             File2 = homologas.File_AC_hits(Random)
             if tipo == 'Nut':
-                Random = Create_fasta(name, File2, 'Nucleotide')
+                Random2 = Create_fasta(name, File2, 'Nucleotide')
+                Create_fasta.m_blast(Random2)
             elif tipo == 'Ppt':
-                Random = Create_fasta(name, File2, 'Protein')
+                Random3 = Create_fasta(name, File2, 'Protein')
+                Create_fasta.m_blast(Random3)
             else:
                 print('Argumentação errada!')
         except:
@@ -416,8 +417,12 @@ class shell(Cmd):
         '''
         try:
             args = arg.split(' ')
-            dir = args[0]
-            file = args[1]
+            inp = args[0:len(args)-1]
+            dir = ''
+            for i in inp:
+                dir += i + ' '
+            file = args[len(args)-1]
+            print(dir,file)
             Random = Mutiple(dir, file)
             Mutiple.alignment(Random)
         except:
@@ -427,15 +432,11 @@ class shell(Cmd):
         '''
         ***É necessário possuir um ficheiro .dnd resultante de um alinhamento para realizar esta operação ***
         > Realiza o Alinhamento Multiplo entre várias sequencias
-        Variaveis : - Nome para o ficheiro
-                    - Ficheiro .dnd que contém o resultado do alinhamento alinhamento <input_file>
-        Returns: obtem ficheiro da arvore filogenetica.
+        Variaveis : - Ficheiro .dnd que contém o resultado do alinhamento alinhamento <input_file>
+        Returns: Imprime a arvore filogenetica na consola
         '''
-        args = arg.split(' ')
-        nome = args[0]
-        file = args[1]
-        Random = nome + '_1'
-        Random = Phylo(nome, file)
+        file = arg
+        Random = Phylo(file)
         Phylo.obter_arvore(Random)
 
     def do_analise_alinhamento(self,arg):
