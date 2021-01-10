@@ -45,12 +45,6 @@ class ID:
 
 
 class Prot_ID:
-    '''
-    VARIAVEIS:
-        id= codigo da proteina a pesquisar na base de dados Swiss-Prot;
-    RETURNS:
-       Lista de Acession numbers filtrados pelo tipo gb e sem repetições
-    '''
     database = 'swiss'
     def __init__(self, id):
         self.id = id
