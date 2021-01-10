@@ -104,6 +104,7 @@ class Pubmed:
         ficheiro_output = open(FILE, 'w+')
         print('A guardar ficheiro...')
         for record in records:
-            x = "title: " + str(record.get("TI", "?")) + '\n' + 'abstract: ' + str(record.get('AB', '?')) + '\n' + "authors: " + str(record.get("AU", "?")) + '\n' + "source: " + str(record.get("SO", "?")) + '\n \n'
+            x = "title: " + str(record.get("TI", "?")) + '\n' +'abstract: ' + str(record.get('AB', '?')) + '\n' + "authors: " + str(record.get("AU", "?")) + '\n' + "source: " + str(record.get("SO", "?")) + '\n' + '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'+'\n'
             ficheiro_output.write(x)
         print('ficheiro guardado segundo: ' + FILE)
+
