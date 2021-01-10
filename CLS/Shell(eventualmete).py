@@ -4,12 +4,9 @@ from Blast import Blast
 from Homologas import homologas
 from FASTA_Multiple import Create_fasta
 from Multiple_Alignment import Mutiple
-#from PDB_F import PDB
+from PDB_F import PDB
 from Phylo import Phylo
-from Anal_multp import Align, hist
-
-
-
+from Analise_multipla import Align, hist
 
 class shell(Cmd):
     intro = ''' \n Comandos da Shell:
@@ -32,7 +29,7 @@ class shell(Cmd):
         arvore_filogenetica <input_file> ??????? ** codigo nao atualizado **
         analise_alinhamento <name> <input_file>
         tabela_substituição <name> <input_file>
-        histograma <input_file>
+        histograma <input_file> 
         
         sair -> sair da função
                                                                         
@@ -175,7 +172,7 @@ class shell(Cmd):
         Random = Get_info(arg)
         Get_info.gb_inf(Random)
 
-    def do_Pubmed_search(selfself,arg):
+    def do_Pubmed_search(self,arg):
         '''
         Variaveis:  - Name: nome a dar ao ficheiro .txt (estrutura: Pubmed_*name*.txt)
                     - query: query a pesquisar
@@ -226,7 +223,7 @@ class shell(Cmd):
                 print('Opção inválida')
         except:print('Erro de execução')
 
-    def do_estrutura_proteina(self):
+    def do_estrutura_proteina(self,arg):
         '''
         *** Para utlizar esta função é necessario ter o Pymol instalado ***
         > Obtem imagem 3D da proteina atraves do PDB
@@ -430,7 +427,8 @@ class shell(Cmd):
         '''
         ***É necessário possuir um ficheiro .dnd resultante de um alinhamento para realizar esta operação ***
         > Realiza o Alinhamento Multiplo entre várias sequencias
-        Variaveis : - Ficheiro .dnd que contém o resultado do alinhamento alinhamento <input_file>
+        Variaveis : - Nome para o ficheiro
+                    - Ficheiro .dnd que contém o resultado do alinhamento alinhamento <input_file>
         Returns: obtem ficheiro da arvore filogenetica.
         '''
         args = arg.split(' ')

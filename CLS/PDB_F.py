@@ -1,8 +1,10 @@
 from Bio.PDB import *
 import pymol
+
 class PDB:
     def __init__(self, id):
         self.id = id
+
     def PDB(self):
         """"
             ID: fornecer o ID da PDB
