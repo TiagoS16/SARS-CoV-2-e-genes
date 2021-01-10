@@ -60,5 +60,3 @@ class hist:
         pylab.show()
         print('Plot criado')
 
-random = Align('fodinhas2', "FGB_fullseqs_AC.aln")
-Align.table_alinhamento(random)
