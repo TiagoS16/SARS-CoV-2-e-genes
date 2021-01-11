@@ -1,5 +1,5 @@
 class Phylo:
-    def __init__(self, nome, file):
+    def __init__(self, file):
         self.file = file
 
     def obter_arvore(self):

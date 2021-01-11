@@ -49,7 +49,7 @@ class hist:
 
     def histogram(self):
         print('Iniciar processo...')
-        sizes = [len(rec) for rec in SeqIO.parse( self.file , "fasta")]
+        sizes = [len(rec) for rec in SeqIO.parse(self.file , "fasta")]
         len(sizes), min(sizes), max(sizes)
         sizes
         import pylab

@@ -172,7 +172,7 @@ class shell(Cmd):
         Random = Get_info(arg)
         Get_info.gb_inf(Random)
 
-    def do_Pubmed_search(self,arg):
+    def do_procurar_id_nucleotidePubmed_search(self,arg):
         '''
         Variaveis:  - Name: nome a dar ao ficheiro .txt (estrutura: Pubmed_*name*.txt)
                     - query: query a pesquisar
@@ -424,13 +424,12 @@ class shell(Cmd):
             for i in inp:
                 dir += i + ' '
             file = args[len(args)-1]
-            print(dir,file)
             Random = Mutiple(dir, file)
             Mutiple.alignment(Random)
         except:
             print('Erro de execução')
 
-    def do_arvore_filogenetica(self,arg):
+    def do_arvore_filogenetica(self, arg):
         '''
         ***É necessário possuir um ficheiro .dnd resultante de um alinhamento para realizar esta operação ***
         > Realiza o Alinhamento Multiplo entre várias sequencias
@@ -442,7 +441,7 @@ class shell(Cmd):
             if len(args) != 1:
                 print('Parametros errados')
             else:
-                file = args
+                file = args[0]
                 Random = Phylo(file)
                 Phylo.obter_arvore(Random)
         except:
@@ -502,12 +501,12 @@ class shell(Cmd):
             if len(args) != 1:
                 print('Parametros errados')
             else:
-                Random = hist(args)
+                Random = hist(args[0])
                 hist.histogram(Random)
         except:
             print('Erro de execução')
 
-    def do_menu(self):
+    def do_menu(self,arg):
         print(self.intro)
 
     def do_sair(self, arg):
