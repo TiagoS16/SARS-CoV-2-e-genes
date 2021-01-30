@@ -1,8 +1,13 @@
 from Bio.Align.Applications import ClustalwCommandline
 
-diretoria = r'C:\Program Files (x86)\ClustalW2\clustalw2.exe'
-in_file = r'entrez_prot.fasta'
+class Mutiple:
+    def __init__(self, dir, in_file):
+        self.diretoria= dir
+        self.in_file = in_file
+        self.name = in_file.rstrip('.fasta')
 
-clustalw_cline = ClustalwCommandline(diretoria, infile=in_file)
-clustalw_cline()
-print(clustalw_cline)
+    def alignment(self):
+        clustalw_cline = ClustalwCommandline(self.diretoria, infile= self.in_file)
+        clustalw_cline()
+        print(clustalw_cline)
+        print("Ficheiros " + self.name + '.aln e '+ self.name + '.dnd gerados.')
