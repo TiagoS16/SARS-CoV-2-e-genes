@@ -20,14 +20,14 @@ class shell(Cmd):
         * procurar_id_swiss -> Guardar ficheiro fasta a partir do id na database Swiss Prot.
         * estrutura_proteina -> Obter a estrutura 3D da proteina através do id na database PDB.
         * blast <nome> <input_file> <formato_do_input_file> -> Realizar o blast (blastn, blastp, blastx).
-        * report_blast <nome> <input_file_blast> <E-value threshold> -> Obter um relatório resumo do Blast.
-        * homologia <nome> <input_file_blast> <E-value threshold(opcional)> -> Obter os hits obtidos no 
+        * report_blast <nome> <input_file_blast> <E-value threshold (opcional)> -> Obter um relatório resumo do Blast.
+        * homologia <nome> <input_file_blast> <E-value threshold (opcional)> -> Obter os hits obtidos no 
         blast realizado.
         * homologo_AC <nome> <input_file_blast> <E-value threshold(opcional)> -> Obter os Acession Numbers 
         dos hits obtidos no blast realizado.
         * fasta_homologos <nome> <input_file_blast> <(nt/ppt)> <E-value threshold(opcional)> -> Obter a 
         sequência total dos hits através dos Acession Numbers dos hits obtidos no blast realizado.
-        * alinhamento_multiplo <diretoria do Clustalw2(opcional)> <Input_file> -> Alinhamento Multiplo entre sequências 
+        * alinhamento_multiplo <diretoria do Clustalw2(opcional)> <input_file> -> Alinhamento Multiplo entre sequências 
         contidas num ficheiro .fasta através do Clustalw2.
         * arvore_filogenetica <input_file> -> Construção da árvore filogenética apartir do ficheiro resultante do 
         Alinhamento Multiplo. 
