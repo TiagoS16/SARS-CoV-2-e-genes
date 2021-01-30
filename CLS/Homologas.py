@@ -1,7 +1,4 @@
 from Bio.Blast import NCBIXML
-from Bio import Entrez
-from Bio import SearchIO
-from Bio import Medline
 
 class homologas:
     def __init__(self, name, ficheiro_blast, E_VALUE_THRESH = None):
@@ -79,7 +76,7 @@ class homologas:
         HSP = {}
         p = 1
         print('A criar ficheiro...')
-        N = 'Program: blastn (2.11.0+) \n Hits: ----  -----  ----------------------------------------------------------  \n        #      HSP    ID + description \n       ----  -----  ---------------------------------------------------------- \n'
+        N = 'Program: ' + str(blast_record.application) + ' (' + blast_record.version + ') \n Hits: ----  -----  ----------------------------------------------------------  \n        #      HSP    ID + description \n       ----  -----  ---------------------------------------------------------- \n'
         for alignment in blast_record.alignments:
             for hsp in alignment.hsps:
                 if hsp.expect < self.E_value:

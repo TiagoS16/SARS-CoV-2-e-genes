@@ -17,7 +17,7 @@ class Create_fasta:
 
     def m_blast(self):
         print('A criar ficheiro...')
-        Output = self.name + '_fullseqs_AC.fasta'
+        Output = self.name + '_complseqs_AC.fasta'
         ficheiro_output = open(Output, 'w+')
         ficheiro = open(self.file, 'r')
         b_file = ficheiro.readlines()
