@@ -234,7 +234,7 @@ class shell(Cmd):
 
     def do_blast(self, arg1):
         '''
-        ***É necessário possuir um ficheiro .fasta ou .gb com a sequência para realizar esta operação ***
+        *** É necessário possuir um ficheiro .fasta ou .gb com a sequência para realizar esta operação ***
         > Realiza o blast no NCBI à escolha do utilizador.
         Variáveis : - Nome para o ficheiro devolvido pela função <nome>, a extensão é adicionada automaticamente. <nome>.xml
                     - Ficheiro .fasta ou .gb que contém a sequência <input_file>.
@@ -249,7 +249,6 @@ class shell(Cmd):
                 name = args[0]
                 file = args[1]
                 format = args[2]
-                Random = name + '_1'
                 option = int(input('introduzir Blast a realizar: \n 1 - Blastp \n 2 - Blastn \n 3 - Blastx \n Opção:'))
                 if option == 1:
                     Random = Blast(name, str(file), 'blastp', str(format))
