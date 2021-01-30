@@ -12,8 +12,8 @@ class Phylo:
         Phylo.draw_ascii(tree)
         tree.ladderize() # Flip branches so deeper clades are displayed at top
         SMALL_SIZE = 5
-        MEDIUM_SIZE = 8
-        BIGGER_SIZE = 11
+        MEDIUM_SIZE = 11
+        BIGGER_SIZE = 13
         plt.rc('font', size=SMALL_SIZE)  # controls default text sizes
         plt.rc('axes', titlesize=SMALL_SIZE)  # fontsize of the axes title
         plt.rc('axes', labelsize=MEDIUM_SIZE)  # fontsize of the x and y labels
